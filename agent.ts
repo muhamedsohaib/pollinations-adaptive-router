@@ -201,7 +201,8 @@ async function chooseModel(profile: Profile, modalities: string[], pollinations:
 
   const winner = scored[0];
   const m = winner.metrics;
-  const reason = `profile=${profile};score=${m.score.toFixed(3)};cost=${m.cost.toExponential(2)};5xx=${(m.error5xxRate * 100).toFixed(1)}%;p95=${m.p95 ?? "na"}ms`;
+  const p95Text = m.p95 == null ? "na" : `${m.p95}ms`;
+  const reason = `profile=${profile};score=${m.score.toFixed(3)};cost=${m.cost.toExponential(2)};5xx=${(m.error5xxRate * 100).toFixed(1)}%;p95=${p95Text}`;
   return { model: winner.model.id, reason };
 }
 
