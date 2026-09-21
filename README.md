@@ -51,3 +51,21 @@ Create a Pollinations code agent pointing at this public repository. The callabl
 `muhamedsohaib/pollinations-adaptive-router`
 
 The caller pays only for the selected downstream model; the routing decision itself uses catalog and health metadata rather than a separate classifier-model generation.
+
+## Live deployment proof
+
+Deployed agent ID: `c70a02b4-08b5-4ab8-a38b-6159339fe3b8`
+
+Deployed commit: `ebc70d1b6e43ed3a0f94b7ba79be30d146bb369d`
+
+Three live requests through `muhamedsohaib/pollinations-adaptive-router` on 2026-09-21 routed to three different downstream models:
+
+| Profile | Test request shape | Downstream model | Recorded cost |
+| --- | --- | --- | ---: |
+| FAST | short arithmetic | `openai/gpt-5.4-nano` | `$0.0000` |
+| CODE | small Python debugging task | `openai/gpt-5.4-mini` | `$0.0002` |
+| DEEP | architecture trade-off synthesis | `x-ai/grok-4.3` | `$0.0018` |
+
+These are live usage-history records, not mocked test results. The selected model can change over time because the router intentionally uses current health, latency and catalog pricing.
+
+The route explanation is emitted in `x-pollinations-router-reason`; the end-to-end unit test verifies that this header is present alongside the selected model and profile.
